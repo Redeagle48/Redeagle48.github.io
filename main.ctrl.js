@@ -1,72 +1,24 @@
-angular.module('app').controller("MainController", function () {
+angular.module('app').controller("MainController", function ($http) {
     var vm = this;
-    vm.title = 'AngularJS Tutorial Example';
+    vm.title = 'Useful Links';
     vm.searchInput = '';
-    vm.shows = [
-        {
-            selected: false,
-            title: 'Game of Thrones',
-            year: 2011,
-            favorite: true
-        },
-        {
-            selected: false,
-            title: 'Walking Dead',
-            year: 2010,
-            favorite: false
-        },
-        {
-            selected: false,
-            title: 'Firefly',
-            year: 2002,
-            favorite: true
-        },
-        {
-            selected: false,
-            title: 'Banshee',
-            year: 2013,
-            favorite: true
-        },
-        {
-            selected: false,
-            title: 'Greys Anatomy',
-            year: 2005,
-            favorite: false
-        }
-    ];
+    vm.items = [{}];
 
-    vm.orders = [
-        {
-            id: 1,
-            title: 'Year Ascending',
-            key: 'year',
-            reverse: false
-        },
-        {
-            id: 2,
-            title: 'Year Descending',
-            key: 'year',
-            reverse: true
-        },
-        {
-            id: 3,
-            title: 'Title Ascending',
-            key: 'title',
-            reverse: false
-        },
-        {
-            id: 4,
-            title: 'Title Descending',
-            key: 'title',
-            reverse: true
-        }
-    ];
-    vm.order = vm.orders[0];
+    $http.get('/links.json').then(function (data) {
+        vm.items = data;
+        console.log('Data sent: ' + JSON.stringify(vm.items));
+    });
 
     vm.new = {};
-    vm.addShow = function () {
-        vm.shows.push(vm.new);
+    vm.addItem = function () {
+        vm.items.push(vm.new);
         vm.new = {};
     };
-    
+
+    vm.save = function () {
+        $http.post('links.json', vm.items).then(function (data) {
+            console.log('Data sent: ' + JSON.stringify(vm.items));
+        });
+    };
+
 });

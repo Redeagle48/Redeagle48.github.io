@@ -1,0 +1,12 @@
+[
+    {
+        title: "sapo",
+        description: "descrição",
+        link: "www.sapo.pt"
+    },
+    {
+        title: "google",
+        description: "descrição do google",
+        link: "www.google.pt"
+    }
+]
